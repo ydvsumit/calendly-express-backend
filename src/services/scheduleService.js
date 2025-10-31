@@ -1,43 +1,35 @@
-const client = require("./calendlyClient");
-const availabilityService = require("./availabilityService");
+const { bookings, availability } = require("../utils/mockData");
 
-async function createInviteeForEvent(schedulingUrl, invitee) {
-  const payload = { scheduling_url: schedulingUrl, ...invitee };
-  try {
-    const res = await client.post("/scheduling_links", payload);
-    return res.data;
-  } catch (err) {
-    if (err.response?.status === 404) {
-      const res2 = await client.post("/scheduled_events", { invitee });
-      return res2.data;
-    }
-    throw err;
-  }
-}
-
-async function scheduleAppointment({
-  eventTypeUri,
+function scheduleAppointment({
+  eventTypeId,
   startTime,
   name,
   email,
   appointmentType,
 }) {
-  const avail = await availabilityService.getEventTypeAvailableTimes(
-    eventTypeUri,
+  const slot = availability.find(
+    (a) =>
+      a.eventTypeId === Number(eventTypeId) &&
+      a.start === startTime &&
+      !a.booked
+  );
+
+  if (!slot) throw new Error("Slot not available or already booked");
+
+  slot.booked = true;
+
+  const booking = {
+    id: bookings.length + 1,
+    eventTypeId,
     startTime,
-    startTime
-  );
-  const slot = (avail?.collection || []).find(
-    (s) => s.start_time === startTime
-  );
+    endTime: slot.end,
+    name,
+    email,
+    appointmentType,
+  };
 
-  if (!slot) throw new Error("Requested slot not available");
-
-  const schedulingUrl = slot.scheduling_url || slot.uri;
-  const invitee = { name, email };
-
-  const booking = await createInviteeForEvent(schedulingUrl, invitee);
+  bookings.push(booking);
   return booking;
 }
 
-module.exports = { createInviteeForEvent, scheduleAppointment };
+module.exports = { scheduleAppointment };

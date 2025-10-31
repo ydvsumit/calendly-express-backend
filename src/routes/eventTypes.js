@@ -1,15 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { eventTypeService } = require("../services");
+const { listEventTypes } = require("../services/eventTypeService");
 
-// GET /api/event-types
-router.get("/", async (req, res, next) => {
-  try {
-    const data = await eventTypeService.listEventTypes();
-    res.json(data);
-  } catch (err) {
-    next(err);
-  }
+router.get("/", (req, res) => {
+  res.json(listEventTypes());
 });
 
 module.exports = router;

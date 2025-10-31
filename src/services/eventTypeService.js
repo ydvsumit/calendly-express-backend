@@ -1,10 +1,7 @@
-const client = require("./calendlyClient");
+const { eventTypes } = require("../utils/mockData");
 
-async function listEventTypes(userUri) {
-  const params = {};
-  if (userUri) params.user = userUri;
-  const res = await client.get("/event_types", { params });
-  return res.data;
+function listEventTypes() {
+  return eventTypes;
 }
 
 module.exports = { listEventTypes };
