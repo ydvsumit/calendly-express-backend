@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { scheduleAppointment } = require("../services/scheduleService");
-const durations = require("../utils/durations");
+const durations = require("../utils/duration");
 const validateSchema = require("../middleware/validateSchema");
 const scheduleSchema = require("../schema/scheduleSchema");
 
