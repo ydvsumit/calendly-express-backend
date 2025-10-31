@@ -1,0 +1,30 @@
+{
+  "name": "calendly-express-backend",
+  "version": "1.0.0",
+  "description": "A Node.js + Express backend that integrates with Calendly to:  \r     • Fetch doctor's schedule (working hours, existing appointments),  \r     • Get available time slots dynamically,  \r     • Create new appointments (via Calendly Scheduling API / create invitee),  \r     • Handle different appointment types with preset durations",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ydvsumit/calendly-express-backend.git"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "ajv-formats": "^3.0.1",
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ydvsumit/calendly-express-backend/issues"
+  },
+  "homepage": "https://github.com/ydvsumit/calendly-express-backend#readme"
+}
